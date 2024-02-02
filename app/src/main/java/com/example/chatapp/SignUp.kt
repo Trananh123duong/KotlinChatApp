@@ -74,6 +74,7 @@ class SignUp : ComponentActivity() {
                     //code for jump to home
                     addUserToDatabase(name, email, mAuth.currentUser?.uid!!)
                     val intent = Intent(this, MainActivity::class.java)
+                    finish()
                     startActivity(intent)
                 } else {
                     Toast.makeText(baseContext, "Sign Up failed. Try again after some time.", Toast.LENGTH_SHORT).show()

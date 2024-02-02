@@ -75,6 +75,7 @@ class Login : ComponentActivity() {
                 if (task.isSuccessful) {
                     // code for logging in user
                     val intent = Intent(this, MainActivity::class.java)
+                    finish()
                     startActivity(intent)
                 } else {
                     Toast.makeText(baseContext, "Login failed. Try again after some time.", Toast.LENGTH_SHORT).show()
