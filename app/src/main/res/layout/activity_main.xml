@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="836dp"
+        android:layout_height="match_parent"
         tools:listitem="@layout/user_layout" />
 
 </LinearLayout>

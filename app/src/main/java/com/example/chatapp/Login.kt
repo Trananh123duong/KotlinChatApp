@@ -69,11 +69,15 @@ class Login : ComponentActivity() {
 //        }
     }
 
+    // Đăng nhập
     private fun login(email: String, password: String) {
+        // Kiểm tra email và password
         mAuth.signInWithEmailAndPassword(email, password)
+            // Khi đăng nhập thành công
             .addOnCompleteListener(this) { task ->
+                // Nếu đăng nhập thành công
                 if (task.isSuccessful) {
-                    // code for logging in user
+                   // Chuyển sang màn hình MainActivity
                     val intent = Intent(this, MainActivity::class.java)
                     finish()
                     startActivity(intent)
