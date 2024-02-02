@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.chatapp.ui.theme.ChatAppTheme
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUp : ComponentActivity() {
     private lateinit var edtName: EditText
@@ -24,6 +26,7 @@ class SignUp : ComponentActivity() {
     private  lateinit var btnSignUp: Button
 
     private  lateinit var mAuth: FirebaseAuth
+    private  lateinit var mDbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +40,11 @@ class SignUp : ComponentActivity() {
         btnSignUp = findViewById(R.id.btnSignup)
 
         btnSignUp.setOnClickListener() {
+            val name = edtName.text.toString()
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            signUp(email, password)
+            signUp(name, email, password)
         }
 
 //        btnSignUp.setOnClickListener() {
@@ -63,17 +67,23 @@ class SignUp : ComponentActivity() {
 //        }
     }
 
-    private fun signUp (email: String, password: String) {
+    private fun signUp (name: String, email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //code for jump to home
+                    addUserToDatabase(name, email, mAuth.currentUser?.uid!!)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(baseContext, "Sign Up failed. Try again after some time.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun addUserToDatabase(name: String, email: String, uid: String) {
+        mDbRef = FirebaseDatabase.getInstance().reference
+        mDbRef.child("Users").child(uid).setValue(User(name, email, uid))
     }
 }
 
