@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.model
 
 class Message {
     var message: String? = null
